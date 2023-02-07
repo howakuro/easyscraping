@@ -5,5 +5,5 @@
 ## Install
 
 ```bash
-pip install git+[リポジトリのURL]
+pip install git+https://github.com/howakuro/easyscraping
 ```
