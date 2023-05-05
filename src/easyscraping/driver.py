@@ -1,6 +1,7 @@
 import os
 import time
 import logging
+
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome import service
@@ -25,7 +26,14 @@ class SeleniumBrowserDriver(webdriver.Chrome):
         options.use_chromium = True
         logging.getLogger('WDM').setLevel(logging.NOTSET)
 
-        brouser_service = service.Service(ChromeDriverManager().install())
+        max_restart = 10
+        for i in range(max_restart):
+            try:
+                brouser_service = service.Service(
+                    ChromeDriverManager().install())
+            except:
+                if i == max_restart - 1:
+                    raise
 
         super().__init__(service=brouser_service,
                          options=options,
