@@ -31,6 +31,7 @@ class SeleniumBrowserDriver(webdriver.Chrome):
             try:
                 brouser_service = service.Service(
                     ChromeDriverManager().install())
+                break
             except:
                 if i == max_restart - 1:
                     raise
