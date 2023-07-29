@@ -1,18 +1,18 @@
-import pathlib
 import time
 import logging
+from pathlib import Path
 
 from selenium import webdriver
+from selenium.webdriver.remote.webelement import WebElement
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome import service
 from webdriver_manager.chrome import ChromeDriverManager
 
 
 class SeleniumBrowserDriver(webdriver.Chrome):
-    def __init__(self, work_dir_path, is_headless=False):
-        service_log_file_path = pathlib.Path(
-            work_dir_path, "log", "service.log")
-        user_profile_path = pathlib.Path(work_dir_path, "userprofile")
+    def __init__(self, work_dir_path: str | Path, is_headless: bool = False):
+        service_log_file_path = Path(work_dir_path, "log", "service.log")
+        user_profile_path = Path(work_dir_path, "userprofile")
 
         options = Options()
         options.add_argument(
@@ -40,12 +40,12 @@ class SeleniumBrowserDriver(webdriver.Chrome):
                          options=options,
                          service_log_path=service_log_file_path)
 
-    def sleep_requests(self, url, sleepsec=3):
+    def sleep_requests(self, url: str, sleepsec: int = 3):
         response = self.get(url)
         time.sleep(sleepsec)
         return response
 
-    def sleep_click(self, elements, sleepsec=3):
+    def sleep_click(self, elements: WebElement, sleepsec: int = 3):
         elements.click()
         time.sleep(sleepsec)
 
