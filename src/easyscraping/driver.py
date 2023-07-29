@@ -21,7 +21,7 @@ class SeleniumBrowserDriver(webdriver.Chrome):
         options = Options()
         options.add_argument(
             '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36')
-        options.add_argument('--user-data-dir='+user_profile_path)
+        options.add_argument('--user-data-dir='+str(user_profile_path))
 
         if is_headless == True:
             options.add_argument('--headless')
@@ -42,17 +42,17 @@ class SeleniumBrowserDriver(webdriver.Chrome):
 
         super().__init__(service=brouser_service,
                          options=options,
-                         service_log_path=service_log_file_path)
+                         service_log_path=str(service_log_file_path))
 
     def sleep_requests(self, url: str, sleepsec: int | None = None):
         response = self.get(url)
-        sleepsec = sleepsec if sleepsec is not None else self.default_request_wait_seconds
+        sleepsec = sleepsec if sleepsec is not None else self.default_sleepsec
         time.sleep(sleepsec)
         return response
 
     def sleep_click(self, elements: WebElement, sleepsec: int | None = None):
         elements.click()
-        sleepsec = sleepsec if sleepsec is not None else self.default_request_wait_seconds
+        sleepsec = sleepsec if sleepsec is not None else self.default_sleepsec
         time.sleep(sleepsec)
 
     def window_resize(self):
