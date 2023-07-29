@@ -10,9 +10,13 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 class SeleniumBrowserDriver(webdriver.Chrome):
-    def __init__(self, work_dir_path: str | Path, is_headless: bool = False):
+    default_sleepsec: int
+
+    def __init__(self, work_dir_path: str | Path, is_headless: bool = False, default_sleepsec: int = 3):
         service_log_file_path = Path(work_dir_path, "log", "service.log")
         user_profile_path = Path(work_dir_path, "userprofile")
+
+        self.default_sleepsec = default_sleepsec
 
         options = Options()
         options.add_argument(
@@ -40,13 +44,15 @@ class SeleniumBrowserDriver(webdriver.Chrome):
                          options=options,
                          service_log_path=service_log_file_path)
 
-    def sleep_requests(self, url: str, sleepsec: int = 3):
+    def sleep_requests(self, url: str, sleepsec: int | None = None):
         response = self.get(url)
+        sleepsec = sleepsec if sleepsec is not None else self.default_request_wait_seconds
         time.sleep(sleepsec)
         return response
 
-    def sleep_click(self, elements: WebElement, sleepsec: int = 3):
+    def sleep_click(self, elements: WebElement, sleepsec: int | None = None):
         elements.click()
+        sleepsec = sleepsec if sleepsec is not None else self.default_request_wait_seconds
         time.sleep(sleepsec)
 
     def window_resize(self):
