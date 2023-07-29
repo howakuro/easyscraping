@@ -1,4 +1,4 @@
-import os
+import pathlib
 import time
 import logging
 
@@ -10,9 +10,9 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 class SeleniumBrowserDriver(webdriver.Chrome):
     def __init__(self, work_dir_path, is_headless=False):
-        service_log_file_path = os.path.join(
+        service_log_file_path = pathlib.Path(
             work_dir_path, "log", "service.log")
-        user_profile_path = os.path.join(work_dir_path, "userprofile")
+        user_profile_path = pathlib.Path(work_dir_path, "userprofile")
 
         options = Options()
         options.add_argument(
