@@ -10,8 +10,6 @@ from webdriver_manager.chrome import ChromeDriverManager
 
 
 class SeleniumBrowserDriver(webdriver.Chrome):
-    default_sleepsec: int
-
     def __init__(self, work_dir_path: str | Path, is_headless: bool = False, default_sleepsec: int = 3):
         user_profile_path = Path(work_dir_path, "userprofile")
 
