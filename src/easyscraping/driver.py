@@ -13,7 +13,6 @@ class SeleniumBrowserDriver(webdriver.Chrome):
     default_sleepsec: int
 
     def __init__(self, work_dir_path: str | Path, is_headless: bool = False, default_sleepsec: int = 3):
-        service_log_file_path = Path(work_dir_path, "log", "service.log")
         user_profile_path = Path(work_dir_path, "userprofile")
 
         self.default_sleepsec = default_sleepsec
@@ -34,15 +33,14 @@ class SeleniumBrowserDriver(webdriver.Chrome):
         for i in range(max_restart):
             try:
                 brouser_service = service.Service(
-                    ChromeDriverManager().install())
+                    executable_path=ChromeDriverManager().install(),
+                )
                 break
             except:
                 if i == max_restart - 1:
                     raise
 
-        super().__init__(service=brouser_service,
-                         options=options,
-                         service_log_path=str(service_log_file_path))
+        super().__init__(service=brouser_service, options=options)
 
     def sleep_requests(self, url: str, sleepsec: int | None = None):
         response = self.get(url)
