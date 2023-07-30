@@ -8,6 +8,18 @@ import easyscraping
 
 
 def google_search(search_text: str) -> list:
+    """
+    Function to perform a Google search and obtain a list of hit URLs.
+
+    Args:
+        search_text (str):
+            String to perform the search.
+
+    Returns:
+        list:
+            A list of URLs found by the search.
+            If it does not exist, an empty list is returned.
+    """
     with tempfile.TemporaryDirectory() as directory_name:
         with easyscraping.SeleniumBrowserDriver(work_dir_path=directory_name, is_headless=True) as driver:
             url = 'https://www.google.com/search?q='
