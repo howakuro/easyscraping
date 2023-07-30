@@ -1,11 +1,11 @@
-import time
 import logging
+import time
 from pathlib import Path
 
 from selenium import webdriver
-from selenium.webdriver.remote.webelement import WebElement
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome import service
+from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.remote.webelement import WebElement
 from webdriver_manager.chrome import ChromeDriverManager
 
 
@@ -23,7 +23,7 @@ class SeleniumBrowserDriver(webdriver.Chrome):
             '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36')
         options.add_argument('--user-data-dir='+str(user_profile_path))
 
-        if is_headless == True:
+        if is_headless:
             options.add_argument('--headless')
 
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
@@ -36,9 +36,9 @@ class SeleniumBrowserDriver(webdriver.Chrome):
                 brouser_service = service.Service(
                     ChromeDriverManager().install())
                 break
-            except:
+            except Exception:
                 if i == max_restart - 1:
-                    raise
+                    raise Exception
 
         super().__init__(service=brouser_service,
                          options=options,

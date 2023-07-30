@@ -7,7 +7,7 @@ from selenium.webdriver.common.by import By
 import easyscraping
 
 
-def google_search(search_text):
+def google_search(search_text: str) -> list:
     with tempfile.TemporaryDirectory() as directory_name:
         with easyscraping.SeleniumBrowserDriver(work_dir_path=directory_name, is_headless=True) as driver:
             url = 'https://www.google.com/search?q='
