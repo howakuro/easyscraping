@@ -3,10 +3,7 @@ import time
 from pathlib import Path
 
 from selenium import webdriver
-from selenium.webdriver.chrome import service
-from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.remote.webelement import WebElement
-from webdriver_manager.chrome import ChromeDriverManager
 
 
 class SeleniumBrowserDriver(webdriver.Chrome):
@@ -15,7 +12,7 @@ class SeleniumBrowserDriver(webdriver.Chrome):
 
         self.default_sleepsec = default_sleepsec
 
-        options = Options()
+        options = webdriver.ChromeOptions()
         options.add_argument(
             '--user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/74.0.3729.169 Safari/537.36')
         options.add_argument('--user-data-dir='+str(user_profile_path))
@@ -24,15 +21,12 @@ class SeleniumBrowserDriver(webdriver.Chrome):
             options.add_argument('--headless')
 
         options.add_experimental_option('excludeSwitches', ['enable-logging'])
-        options.use_chromium = True
         logging.getLogger('WDM').setLevel(logging.NOTSET)
 
         max_restart = 10
         for i in range(max_restart):
             try:
-                brouser_service = service.Service(
-                    executable_path=ChromeDriverManager().install(),
-                )
+                brouser_service = webdriver.ChromeService()
                 break
             except Exception:
                 if i == max_restart - 1:
